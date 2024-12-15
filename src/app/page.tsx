@@ -117,8 +117,8 @@ export default async function Home() {
             Mathieu Sommet Live, les Stats.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-          Viewer de replay, c'est en regardant ma pile de side-projects non fini 
-          que j'en suis venu à réaliser une interface coolos pour rechercher facilement 
+          Viewer de replay, c&apos;est en regardant ma pile de side-projects non fini 
+          que j&apos;en suis venu à réaliser une interface coolos pour rechercher facilement 
           des replays de streams 🔍. <br/> (Ses résaux ci-dessous)
           </p>
           <div className="mt-6 flex gap-6">

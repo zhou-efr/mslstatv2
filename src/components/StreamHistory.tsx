@@ -278,7 +278,7 @@ export default function StreamHistory() {
                 <span className="ml-3">Sélectionner un jour</span>
                 </h2>
                 <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                Tous les streams jusqu'à la date sélectionnée.
+                Tous les streams jusqu&apos;à la date sélectionnée.
                 </p>
                 <div className="mt-6 flex">
                 <input
