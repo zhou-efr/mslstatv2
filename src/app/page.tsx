@@ -84,9 +84,35 @@ function StreamThumbnails({ streams }: { streams: TwitchVideo[] }) {
   )
 }
 
-export default async function Page({ streams }: { streams: TwitchVideo[] }) {
+export default async function Page() {
 
-  // console.log(streams);
+  async function getStreams() {
+    'use server';
+    let streamer_id = ["798312463"]
+    let streamer_name = ["mathieusommetlive"]
+  
+    
+    let streams:Array<TwitchVideo> = [];
+    for (let i = 0; i < streamer_id.length; i++) {
+        const temp:Array<TwitchVideo> = await getLatestStream(streamer_id[i], 31, "month");
+        const current_stream = await getCurrentStream(streamer_id[i])
+  
+        if (current_stream) {
+            temp[0].live = true;
+            temp[0].thumbnail_url = current_stream.thumbnail_url;
+            temp[0].url = "https://www.twitch.tv/".concat(streamer_name[i]);
+        }
+  
+        streams = streams.concat(temp);
+        streams = streams.map((stream) => {
+          stream.thumbnail_url = stream.thumbnail_url.replace("%{width}", "640").replace("%{height}", "360");
+          return stream;
+        });
+    }
+    return streams;
+  }
+
+  const streams = await getStreams();
 
   return (
     <>
@@ -131,36 +157,4 @@ export default async function Page({ streams }: { streams: TwitchVideo[] }) {
       <StreamHistory />
     </>
   )
-}
-
-
-
-export async function getServerSideProps() {
-  let streamer_id = ["798312463"]
-  let streamer_name = ["mathieusommetlive"]
-
-  
-  let streams:Array<TwitchVideo> = [];
-  for (let i = 0; i < streamer_id.length; i++) {
-      const temp:Array<TwitchVideo> = await getLatestStream(streamer_id[i], 31, "month");
-      const current_stream = await getCurrentStream(streamer_id[i])
-
-      if (current_stream) {
-          temp[0].live = true;
-          temp[0].thumbnail_url = current_stream.thumbnail_url;
-          temp[0].url = "https://www.twitch.tv/".concat(streamer_name[i]);
-      }
-
-      streams = streams.concat(temp);
-      streams = streams.map((stream) => {
-        stream.thumbnail_url = stream.thumbnail_url.replace("%{width}", "640").replace("%{height}", "360");
-        return stream;
-      });
-  }
-
-  return {
-    props: {
-      streams
-    }
-  }
 }
