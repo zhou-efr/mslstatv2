@@ -84,7 +84,7 @@ function StreamThumbnails({ streams }: { streams: TwitchVideo[] }) {
   )
 }
 
-export default async function Home() {
+export async function getServersideProps() {
   let streamer_id = ["798312463"]
   let streamer_name = ["mathieusommetlive"]
 
@@ -106,6 +106,15 @@ export default async function Home() {
         return stream;
       });
   }
+
+  return {
+    props: {
+      streams
+    }
+  }
+}
+
+export default async function Home({ streams }: { streams: TwitchVideo[] }) {
 
   // console.log(streams);
 
